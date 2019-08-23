@@ -1,21 +1,17 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
+    <div >
+        <header-component></header-component>
+        <div class="content">
+           <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script>
+import HeaderComponent from './layouts/HeaderComponent.vue'
     export default {
-       
+       components: {
+           HeaderComponent
+       }
     }
 </script>

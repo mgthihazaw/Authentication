@@ -1,12 +1,17 @@
 
 <template>
     <div class="container">
-        Home
+        {{ welcome }}
     </div>
 </template>
 
 <script>
     export default {
-       
+       name : 'home',
+       computed: {
+           welcome(){
+               return this.$store.getters.welcome
+           }
+       }
     }
 </script>
