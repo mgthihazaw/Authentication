@@ -1,18 +1,63 @@
+
+import {getLocalUser} from './helper/auth';
+
+const user=getLocalUser();
 export const storeData = {
     state: {
-        message : 'Welcome to my vue application'
+        currentUser : {},
+        isLoggedIn : !!user,
+        loading: false,
+        auth_error: null,
+        customers: []
     },
     getters: {
-        welcome(state){
-            return state.message;
+        isLoading(state){
+            return state.loading;
+        },
+        isLoggedIn(state){
+            return state.isLoggedIn;
+        },
+        currentUser(state){
+            return state.currentUser
+        },
+        authError(state){
+            return state.auth_error;
+        },
+        customers(state){
+            return state.customers
         }
     },
     mutations: {
+        login(state) {
+            state.loading = true;
+            state.auth_error = null;
+        },
+        loginSuccess(state, payload){
+            console.log("Login")
+            state.auth_error = null;
+            state.isLoggedIn = true;
+            state.loading = false;
+            console.log(payload)
+            state.currentUser = {...payload.user,...{token : payload.access_token}}
+            console.log(payload)
+            localStorage.setItem("user",JSON.stringify(state.currentUser));
+        },
+        loginFailed(state, payload){
+            state.loading = false;
+            state.auth_error = payload.error;
+
+        },
+        logout(state) {
+            localStorage.removeItem("user");
+            state.isLoggedIn = false;
+            state.currentUser = null
+        }
      
     },
     actions: {
-      increment (context) {
-        context.commit('increment')
-      }
+        login(context) {
+            context.commit("login");
+        }
+      
     }
   }

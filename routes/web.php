@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('{all}', function () {
     return view('welcome');
-});
+})->where(['all' => '.*']);;
+// Route::any('{all}', function () {
+//     return view('index');
+// })
+// ->where(['all' => '.*']);
