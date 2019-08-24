@@ -4,10 +4,10 @@ import {getLocalUser} from './helper/auth';
 const user=getLocalUser();
 export const storeData = {
     state: {
-        currentUser : {},
+        currentUser : user,
         isLoggedIn : !!user,
         loading: false,
-        auth_error: null,
+        auth_error: '',
         customers: []
     },
     getters: {
@@ -30,14 +30,13 @@ export const storeData = {
     mutations: {
         login(state) {
             state.loading = true;
-            state.auth_error = null;
+            state.auth_error = '';
         },
         loginSuccess(state, payload){
-            console.log("Login")
-            state.auth_error = null;
+    
+            state.auth_error = '';
             state.isLoggedIn = true;
             state.loading = false;
-            console.log(payload)
             state.currentUser = {...payload.user,...{token : payload.access_token}}
             console.log(payload)
             localStorage.setItem("user",JSON.stringify(state.currentUser));
@@ -50,7 +49,7 @@ export const storeData = {
         logout(state) {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
-            state.currentUser = null
+            state.currentUser = ''
         }
      
     },

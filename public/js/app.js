@@ -1853,11 +1853,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Login: _auth_Login_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  computed: {
-    welcome: function welcome() {
-      return this.$store.getters.welcome;
-    }
-  }
+  computed: {}
 });
 
 /***/ }),
@@ -1926,6 +1922,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1943,12 +1940,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$store.dispatch('login');
       Object(_helper_auth_js__WEBPACK_IMPORTED_MODULE_0__["login"])(this.form).then(function (res) {
-        console.log(res);
-
+        // console.log(res)
         _this.$store.commit('loginSuccess', res);
 
         _this.$router.push('/');
       })["catch"](function (err) {
+        console.log(err);
+        _this.error = err;
+
         _this.$store.commit('loginFailed', err);
       });
     }
@@ -2015,7 +2014,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    logout: function logout() {
+      this.$store.commit('logout');
+      this.$router.push('/login');
+    }
+  },
+  computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
+    }
+  }
+});
 
 /***/ }),
 
@@ -37313,7 +37326,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [_c("login")], 1)
+  return _c("div", { staticClass: "container" }, [
+    _vm._v("\n    \n    Welcome to My Vue Application\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37447,6 +37462,10 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
+              _c("p", { staticClass: "text-danger my-3" }, [
+                _vm._v(_vm._s(_vm.error))
+              ]),
+              _vm._v(" "),
               _vm._m(1)
             ]
           )
@@ -37501,105 +37520,131 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c(
+      "nav",
+      { staticClass: "navbar navbar-expand-lg navbar-light bg-light" },
+      [
+        _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+          _vm._v("Home")
+        ]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarSupportedContent" }
+          },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: " dropdown mr-5" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link dropdown-toggle",
+                  attrs: {
+                    href: "#",
+                    id: "navbarDropdown",
+                    role: "button",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [
+                  _vm.currentUser
+                    ? _c("span", [_vm._v(_vm._s(_vm.currentUser.name))])
+                    : _c("span", [_vm._v("Customer")])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu mr-3",
+                  attrs: { "aria-labelledby": "navbarDropdown" }
+                },
+                [
+                  !_vm.currentUser
+                    ? _c(
+                        "div",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { to: "/register" }
+                            },
+                            [_vm._v("register")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { to: "/login" }
+                            },
+                            [_vm._v("login")]
+                          )
+                        ],
+                        1
+                      )
+                    : _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.logout($event)
+                            }
+                          }
+                        },
+                        [_vm._v("logout")]
+                      )
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "nav",
-        { staticClass: "navbar navbar-expand-lg navbar-light bg-light" },
-        [
-          _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-            _vm._v("Home")
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "navbar-toggler",
-              attrs: {
-                type: "button",
-                "data-toggle": "collapse",
-                "data-target": "#navbarSupportedContent",
-                "aria-controls": "navbarSupportedContent",
-                "aria-expanded": "false",
-                "aria-label": "Toggle navigation"
-              }
-            },
-            [_c("span", { staticClass: "navbar-toggler-icon" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "collapse navbar-collapse",
-              attrs: { id: "navbarSupportedContent" }
-            },
-            [
-              _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-                _c("li", { staticClass: "nav-item active" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("(current)")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: " dropdown" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link dropdown-toggle",
-                    attrs: {
-                      href: "#",
-                      id: "navbarDropdown",
-                      role: "button",
-                      "data-toggle": "dropdown",
-                      "aria-haspopup": "true",
-                      "aria-expanded": "false"
-                    }
-                  },
-                  [_vm._v("Dropdown")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dropdown-menu",
-                    attrs: { "aria-labelledby": "navbarDropdown" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Action")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Another action")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-divider" }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Something else here")]
-                    )
-                  ]
-                )
-              ])
-            ]
-          )
-        ]
-      )
+    return _c(
+      "button",
+      {
+        staticClass: "navbar-toggler",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "#navbarSupportedContent",
+          "aria-controls": "navbarSupportedContent",
+          "aria-expanded": "false",
+          "aria-label": "Toggle navigation"
+        }
+      },
+      [_c("span", { staticClass: "navbar-toggler-icon" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+      _c("li", { staticClass: "nav-item active" }, [
+        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+          _c("span", { staticClass: "sr-only" }, [_vm._v("(current)")])
+        ])
+      ])
     ])
   }
 ]
@@ -53641,9 +53686,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _components_MainApp_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/MainApp.vue */ "./resources/js/components/MainApp.vue");
 /* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store.js */ "./resources/js/store.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _helper_general__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helper/general */ "./resources/js/helper/general.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+
 
 
 
@@ -53656,20 +53706,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: _router__WEBPACK_IMPORTED_MODULE_2__["routes"],
   mode: 'history'
 });
-router.beforeEach(function (to, from, next) {
-  var requiresAuth = to.matched.some(function (record) {
-    return record.meta.requiresAuth;
-  });
-  var currentUser = store.state.currentUser;
-
-  if (requiresAuth && !currentUser) {
-    next('/login');
-  } else if (to.path == '/login' && currentUser) {
-    next('/');
-  } else {
-    next();
-  }
-}); // Vue.component('main-app', require('./components/MainApp').default);
+Object(_helper_general__WEBPACK_IMPORTED_MODULE_6__["initialize"])(store, router); // Vue.component('main-app', require('./components/MainApp').default);
 
 var app = new Vue({
   el: '#app',
@@ -54029,6 +54066,44 @@ function getLocalUser() {
 
 /***/ }),
 
+/***/ "./resources/js/helper/general.js":
+/*!****************************************!*\
+  !*** ./resources/js/helper/general.js ***!
+  \****************************************/
+/*! exports provided: initialize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialize", function() { return initialize; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+function initialize(store, router) {
+  router.beforeEach(function (to, from, next) {
+    var requiresAuth = to.matched.some(function (record) {
+      return record.meta.requiresAuth;
+    });
+    var currentUser = store.state.currentUser;
+
+    if (requiresAuth && !currentUser) {
+      next('/login');
+    } else if (to.path == '/login' && currentUser) {
+      next('/');
+    } else {
+      next();
+    }
+  });
+  axios__WEBPACK_IMPORTED_MODULE_0___default.a.interceptors.response.use(null, function (error) {
+    if (error.response.status = 401) {
+      store.commit('logout');
+      router.push('/login');
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/router.js":
 /*!********************************!*\
   !*** ./resources/js/router.js ***!
@@ -54047,7 +54122,7 @@ var routes = [{
   path: '/',
   component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   meta: {
-    requiredAuth: true
+    requiresAuth: true
   }
 }, {
   path: '/login',
@@ -54077,10 +54152,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var user = Object(_helper_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
 var storeData = {
   state: {
-    currentUser: {},
+    currentUser: user,
     isLoggedIn: !!user,
     loading: false,
-    auth_error: null,
+    auth_error: '',
     customers: []
   },
   getters: {
@@ -54103,14 +54178,12 @@ var storeData = {
   mutations: {
     login: function login(state) {
       state.loading = true;
-      state.auth_error = null;
+      state.auth_error = '';
     },
     loginSuccess: function loginSuccess(state, payload) {
-      console.log("Login");
-      state.auth_error = null;
+      state.auth_error = '';
       state.isLoggedIn = true;
       state.loading = false;
-      console.log(payload);
       state.currentUser = _objectSpread({}, payload.user, {}, {
         token: payload.access_token
       });
@@ -54124,7 +54197,7 @@ var storeData = {
     logout: function logout(state) {
       localStorage.removeItem("user");
       state.isLoggedIn = false;
-      state.currentUser = null;
+      state.currentUser = '';
     }
   },
   actions: {

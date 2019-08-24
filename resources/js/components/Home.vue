@@ -2,7 +2,7 @@
 <template>
     <div class="container">
         
-        <login></login>
+        Welcome to My Vue Application
     </div>
 </template>
 
@@ -15,9 +15,7 @@ import Login from './auth/Login.vue';
            Login
        },
        computed: {
-           welcome(){
-               return this.$store.getters.welcome
-           }
+           
        }
     }
 </script>

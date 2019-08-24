@@ -13,6 +13,7 @@
                           <label for="password" class=" text-dark">Password</label>
                           <input type="password" id="password" class="form-control" v-model="form.password">
                       </div>
+                      <p class="text-danger my-3">{{error}}</p>
                       <div class="form-group row">
                           <button type="submit" class="btn btn-block btn-success py-2">Login</button>
                       </div>
@@ -42,11 +43,13 @@ export default {
 
             login(this.form)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 this.$store.commit('loginSuccess',res)
                 this.$router.push('/')
             })
             .catch(err => {
+                console.log(err)
+                this.error = err
                 this.$store.commit('loginFailed',err)
             })
         }

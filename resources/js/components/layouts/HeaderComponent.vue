@@ -25,7 +25,7 @@
           </li>
          
         </ul>
-        <div class=" dropdown">
+        <div class=" dropdown mr-5">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -34,13 +34,15 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            ><span v-if="currentUser">{{ currentUser.name }}</span><span v-else>Customer</span></a>
+            <div class="dropdown-menu mr-3" aria-labelledby="navbarDropdown">
+              
+              <div v-if="!currentUser">
+                <router-link class="dropdown-item" to="/register">register</router-link>
+                <router-link class="dropdown-item" to="/login">login</router-link>
+              </div>
+              <a class="dropdown-item"  @click.prevent="logout" v-else>logout</a>
+            </div> 
           </div>
       </div>
     </nav>
@@ -49,6 +51,17 @@
 
 <script>
 export default {
-
+ methods: {
+    logout(){
+      this.$store.commit('logout');
+      this.$router.push('/login')
+    }
+ },
+ computed : {
+   
+   currentUser(){
+     return this.$store.getters.currentUser
+   }
+ }
 };
 </script>
