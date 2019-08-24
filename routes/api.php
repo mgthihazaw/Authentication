@@ -11,3 +11,10 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 
 });
+
+
+Route::group(['middleware' => 'jwt.auth'], function ($router) {
+
+    Route::apiResource('customers','CustomerController');
+
+});

@@ -23,9 +23,11 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-         
+         <li class="nav-item">
+            <router-link class="nav-link" to="/customers">Customer</router-link>
+          </li>
         </ul>
-        <div class=" dropdown mr-5">
+        <div class=" dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"

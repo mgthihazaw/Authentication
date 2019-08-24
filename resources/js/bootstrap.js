@@ -15,6 +15,15 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
+import {getLocalUser} from './helper/auth';
+
+// const user=getLocalUser();
+if(localStorage.getItem('user')){
+    let JwtToken = JSON.parse(localStorage.getItem('user'));
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${JwtToken.token}`;
+}
+
+
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {

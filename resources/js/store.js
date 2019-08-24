@@ -50,12 +50,30 @@ export const storeData = {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
             state.currentUser = ''
+        },
+        updateCustomers(state,payload){
+            state.customers = payload
         }
+
      
     },
     actions: {
         login(context) {
             context.commit("login");
+        },
+        getCustomers(context){
+            axios.get('/api/customers')
+            .then(response => {
+                context.commit('updateCustomers',response.data.customers)
+            })
+
+        },
+        newCustomer(context,data){
+            axios.post('/api/customers',data)
+            .then(response => {
+                console.log(response)
+                
+            })
         }
       
     }
